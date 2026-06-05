@@ -611,6 +611,15 @@
     opacity: 0.32 !important;
   }
 
+  .hero-eyebrow,
+  .hero-h1,
+  .hero-sub,
+  .hero-rule,
+  .hero-stats-row {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
   /* Card principal — esquina inferior derecha, grande y sutil */
   .hero-c1 {
     width: 58vw;

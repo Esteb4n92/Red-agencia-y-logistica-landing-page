@@ -304,18 +304,7 @@ function HeroSection({ lang }: { lang: Lang }) {
   useEffect(() => {
     const isMobile = window.innerWidth < 768
 
-    if (isMobile) {
-      gsap.set(['.hero-eyebrow', '.hero-h1', '.hero-sub', '.hero-rule', '.hero-stats-row'], { opacity: 0, y: 15 })
-      gsap.to(['.hero-eyebrow', '.hero-h1', '.hero-sub', '.hero-rule', '.hero-stats-row'], {
-        opacity: 1,
-        y: 0,
-        duration: 0.3,
-        stagger: 0,
-        ease: 'power1.out',
-        delay: 0.1,
-      })
-      return
-    }
+    if (isMobile) return
 
     const cards = [card1.current, card2.current, card3.current, card4.current].filter(Boolean)
     const textEls = ['.hero-eyebrow', '.hero-h1', '.hero-sub', '.hero-rule', '.hero-stats-row']
