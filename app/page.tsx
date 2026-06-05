@@ -302,64 +302,52 @@ function HeroSection({ lang }: { lang: Lang }) {
   const card4 = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const isMobile = window.matchMedia('(max-width: 768px)').matches
+    const isMobile = window.innerWidth < 768
+
+    if (isMobile) {
+      gsap.set(['.hero-eyebrow', '.hero-h1', '.hero-sub', '.hero-rule', '.hero-stats-row'], { opacity: 0, y: 15 })
+      gsap.to(['.hero-eyebrow', '.hero-h1', '.hero-sub', '.hero-rule', '.hero-stats-row'], {
+        opacity: 1,
+        y: 0,
+        duration: 0.3,
+        stagger: 0,
+        ease: 'power1.out',
+        delay: 0.1,
+      })
+      return
+    }
+
     const cards = [card1.current, card2.current, card3.current, card4.current].filter(Boolean)
     const textEls = ['.hero-eyebrow', '.hero-h1', '.hero-sub', '.hero-rule', '.hero-stats-row']
 
-    gsap.set(cards, { opacity: isMobile ? 0.6 : 0, scale: 0.88, y: 30 })
+    gsap.set(cards, { opacity: 0, scale: 0.88, y: 30 })
     gsap.set(textEls, { opacity: 0, y: 28 })
 
-    // Mobile: cards stay semi-transparent so they don't cover the text/stats
     const mo = [0.28, 0.18, 0.14, 0]
 
-    const tl = gsap.timeline({ delay: isMobile ? 0.02 : 0.12 })
+    const tl = gsap.timeline({ delay: 0.12 })
 
     tl.to([cards[3], cards[2]], {
-      opacity: isMobile ? (i: number) => (i === 0 ? mo[3] : mo[2]) : 1,
+      opacity: 1,
       scale: 1,
       y: 0,
-      duration: isMobile ? 0.3 : 0.4,
-      stagger: isMobile ? 0.035 : 0.07,
+      duration: 0.4,
+      stagger: 0.07,
       ease: 'power3.out',
     })
     .to([cards[0], cards[1]], {
-      opacity: isMobile ? (i: number) => (i === 0 ? mo[0] : mo[1]) : 1,
+      opacity: 1,
       scale: 1,
       y: 0,
-      duration: isMobile ? 0.3 : 0.4,
-      stagger: isMobile ? 0.035 : 0.07,
+      duration: 0.4,
+      stagger: 0.07,
       ease: 'power3.out',
-    }, isMobile ? '-=0.2' : '-=0.35')
-    .to('.hero-eyebrow', {
-      opacity: 1,
-      y: 0,
-      duration: isMobile ? 0.25 : 0.4,
-      ease: 'power3.out',
-    }, isMobile ? '-=0.2' : '-=0.25')
-    .to('.hero-h1', {
-      opacity: 1,
-      y: 0,
-      duration: isMobile ? 0.25 : 0.4,
-      ease: 'power3.out',
-    }, isMobile ? '-=0.2' : '-=0.28')
-    .to('.hero-sub', {
-      opacity: 1,
-      y: 0,
-      duration: isMobile ? 0.2 : 0.4,
-      ease: 'power3.out',
-    }, isMobile ? '-=0.18' : '-=0.28')
-    .to('.hero-rule', {
-      opacity: 1,
-      y: 0,
-      duration: isMobile ? 0.18 : 0.3,
-      ease: 'power3.out',
-    }, isMobile ? '-=0.18' : '-=0.25')
-    .to('.hero-stats-row', {
-      opacity: 1,
-      y: 0,
-      duration: isMobile ? 0.2 : 0.4,
-      ease: 'power3.out',
-    }, isMobile ? '-=0.18' : '-=0.22')
+    }, '-=0.35')
+    .to('.hero-eyebrow', { opacity: 1, y: 0, duration: 0.4, ease: 'power3.out' }, '-=0.25')
+    .to('.hero-h1',      { opacity: 1, y: 0, duration: 0.4, ease: 'power3.out' }, '-=0.28')
+    .to('.hero-sub',     { opacity: 1, y: 0, duration: 0.4, ease: 'power3.out' }, '-=0.28')
+    .to('.hero-rule',    { opacity: 1, y: 0, duration: 0.3, ease: 'power3.out' }, '-=0.25')
+    .to('.hero-stats-row', { opacity: 1, y: 0, duration: 0.4, ease: 'power3.out' }, '-=0.22')
 
     return () => { tl.kill() }
   }, [])
@@ -416,11 +404,11 @@ function HeroSection({ lang }: { lang: Lang }) {
         <div className="hero-card-shine" />
       </div>
       <div ref={card2} className="hero-card hero-c2">
-        <Image src="/fotos/seleccion/foto-25.jpg" alt="Boda elegante" fill className="object-cover" loading="lazy" sizes="(max-width: 768px) 100px, 22vw" />
+        <Image src="/fotos/seleccion/foto-25.jpg" alt="Boda elegante" fill className="object-cover" priority sizes="(max-width: 768px) 45vw, 22vw" />
         <div className="hero-card-shine" />
       </div>
-      <div ref={card3} className="hero-card hero-c3 hidden md:block">
-        <Image src="/fotos/seleccion/foto-52.jpg" alt="Catering premium" fill className="object-cover" sizes="(max-width: 768px) 0px, 17vw" />
+      <div ref={card3} className="hero-card hero-c3">
+        <Image src="/fotos/seleccion/foto-52.jpg" alt="Catering premium" fill className="object-cover" sizes="(max-width: 768px) 26vw, 17vw" />
         <div className="hero-card-shine" />
       </div>
       <div ref={card4} className="hero-card hero-c4 hidden md:block">

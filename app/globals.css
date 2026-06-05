@@ -607,6 +607,10 @@
 /* ── Mobile ────────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
 
+  .hero-c1, .hero-c2, .hero-c3 {
+    opacity: 0.32 !important;
+  }
+
   /* Card principal — esquina inferior derecha, grande y sutil */
   .hero-c1 {
     width: 58vw;
@@ -709,6 +713,10 @@
   .hero-h1 {
     text-align: center;
     font-size: clamp(2.6rem, 10vw, 3.4rem);
+  }
+
+  .hero-eyebrow::before {
+    display: none;
   }
 
   .hero-eyebrow {
