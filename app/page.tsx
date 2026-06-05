@@ -412,19 +412,19 @@ function HeroSection({ lang }: { lang: Lang }) {
 
       {/* Cards — todas absolutas, detrás del texto (z < 20) */}
       <div ref={card1} className="hero-card hero-c1">
-        <Image src="/fotos/seleccion/foto-02.jpg" alt="Venue elegante" fill className="object-cover" priority sizes="(max-width: 768px) 80vw, 36vw" />
+        <Image src="/fotos/seleccion/foto-02.jpg" alt="Venue elegante" fill className="object-cover" priority sizes="(max-width: 768px) 60vw, 36vw" />
         <div className="hero-card-shine" />
       </div>
       <div ref={card2} className="hero-card hero-c2">
-        <Image src="/fotos/seleccion/foto-25.jpg" alt="Boda elegante" fill className="object-cover" sizes="(max-width: 768px) 140px, 22vw" />
+        <Image src="/fotos/seleccion/foto-25.jpg" alt="Boda elegante" fill className="object-cover" loading="lazy" sizes="(max-width: 768px) 100px, 22vw" />
         <div className="hero-card-shine" />
       </div>
-      <div ref={card3} className="hero-card hero-c3">
-        <Image src="/fotos/seleccion/foto-52.jpg" alt="Catering premium" fill className="object-cover" sizes="(max-width: 768px) 95px, 17vw" />
+      <div ref={card3} className="hero-card hero-c3 hidden md:block">
+        <Image src="/fotos/seleccion/foto-52.jpg" alt="Catering premium" fill className="object-cover" sizes="(max-width: 768px) 0px, 17vw" />
         <div className="hero-card-shine" />
       </div>
-      <div ref={card4} className="hero-card hero-c4">
-        <Image src="/fotos/seleccion/foto54 mejorada.png" alt="Convivencia" fill className="object-cover" sizes="13vw" />
+      <div ref={card4} className="hero-card hero-c4 hidden md:block">
+        <Image src="/fotos/seleccion/foto54 mejorada.png" alt="Convivencia" fill className="object-cover" sizes="(max-width: 768px) 0px, 13vw" />
         <div className="hero-card-shine" />
       </div>
 
@@ -670,8 +670,8 @@ const GallerySection = forwardRef<HTMLDivElement, { lang: Lang }>(function Galle
 
 // ── Reel ──────────────────────────────────────────────────────────────────────
 
-function ReelCard({ src, title, sub, index, isActive, onActivate, onDeactivate }: {
-  src: string; title: string; sub: string; index: number
+function ReelCard({ src, poster, title, sub, index, isActive, onActivate, onDeactivate }: {
+  src: string; poster: string; title: string; sub: string; index: number
   isActive: boolean; onActivate: () => void; onDeactivate: () => void
 }) {
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -705,9 +705,10 @@ function ReelCard({ src, title, sub, index, isActive, onActivate, onDeactivate }
           ref={videoRef}
           src={src}
           className="w-full h-full object-cover"
+          poster={poster}
           loop
           playsInline
-          preload="metadata"
+          preload="none"
           onEnded={onDeactivate}
         />
         <div className={`absolute inset-0 bg-[#080c14]/30 transition-colors duration-500 ${isActive ? 'opacity-0 pointer-events-none' : ''}`} />
@@ -736,8 +737,8 @@ function ReelSection({ lang }: { lang: Lang }) {
   const t = T[lang].reel
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
   const reels = [
-    { src: '/videos/reel-01.mp4', title: t.c1t, sub: t.c1s },
-    { src: '/videos/reel-02.mp4', title: t.c2t, sub: t.c2s },
+    { src: '/videos/reel-01.mp4', poster: '/fotos/seleccion/foto-01.jpg', title: t.c1t, sub: t.c1s },
+    { src: '/videos/reel-02.mp4', poster: '/fotos/seleccion/foto-25.jpg', title: t.c2t, sub: t.c2s },
   ]
 
   return (
@@ -752,6 +753,7 @@ function ReelSection({ lang }: { lang: Lang }) {
             <ReelCard
               key={i}
               src={reel.src}
+              poster={reel.poster}
               title={reel.title}
               sub={reel.sub}
               index={i}
@@ -1038,7 +1040,7 @@ function FooterSection({ lang }: { lang: Lang }) {
           <div className="flex justify-center">
             <a
               href="https://wa.me/573008008156"
-              className="inline-flex items-center justify-center gap-2.5 px-10 py-5 bg-[#25D366] hover:bg-[#1ebe5d] text-white font-bold rounded-full transition-all duration-300 hover:shadow-[0_0_32px_rgba(37,211,102,0.55)] text-base"
+              className="inline-flex items-center justify-center gap-2.5 px-10 py-5 bg-[#25D366] hover:bg-[#1ebe5d] text-white font-bold rounded-full transition-all duration-300 hover:shadow-[0_0_32px_rgba(37,211,102,0.55)] text-base w-full sm:w-auto max-w-[280px]"
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
@@ -1050,16 +1052,16 @@ function FooterSection({ lang }: { lang: Lang }) {
       </section>
 
       <footer className="py-10 md:py-12 px-4 md:px-6 bg-[#040710] border-t border-white/[0.04]">
-        <div className="max-w-7xl mx-auto flex flex-col items-center gap-6 md:flex-row md:justify-between md:gap-8">
+        <div className="max-w-7xl mx-auto flex flex-col items-center gap-8 md:flex-row md:justify-between md:gap-8">
           {/* Logo centrado en mobile */}
-          <div className="relative h-16 w-52 md:h-20 md:w-64 flex-shrink-0">
+          <div className="relative h-20 w-64 md:h-24 md:w-72 flex-shrink-0">
             <Image src={LOGO_URL} alt="RED" fill className="object-contain object-center md:object-left" />
           </div>
 
           {/* Links — wrappean en mobile, fila en desktop */}
-          <div className="flex flex-wrap justify-center items-center gap-x-5 gap-y-3 md:gap-8 text-[0.72rem] tracking-[0.15em] uppercase text-white/25">
+          <div className="flex flex-wrap justify-center items-center gap-x-5 gap-y-3 md:gap-8 text-sm tracking-[0.15em] uppercase text-white/80">
             {T[lang].nav.map((label, i) => (
-              <a key={label} href={T[lang].navHrefs[i]} className="hover:text-white/60 transition-colors whitespace-nowrap">
+              <a key={label} href={T[lang].navHrefs[i]} className="hover:text-white transition-colors whitespace-nowrap">
                 {label}
               </a>
             ))}
@@ -1070,9 +1072,9 @@ function FooterSection({ lang }: { lang: Lang }) {
             href="https://www.instagram.com/redagenciabq/"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-white/25 hover:text-white/60 transition-colors text-sm"
+            className="flex items-center gap-2 text-white/80 hover:text-white transition-colors text-sm"
           >
-            <Instagram className="w-4 h-4" />
+            <Instagram className="w-5 h-5" />
             @redagenciabq
           </a>
         </div>
