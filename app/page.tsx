@@ -307,7 +307,7 @@ function HeroSection({ lang }: { lang: Lang }) {
     if (isMobile) return
 
     const cards = [card1.current, card2.current, card3.current, card4.current].filter(Boolean)
-    const textEls = ['.hero-eyebrow', '.hero-h1', '.hero-sub', '.hero-rule', '.hero-stats-row']
+    const textEls = ['.hero-eyebrow', '.hero-h1', '.hero-sub', '.hero-rule']
 
     gsap.set(cards, { opacity: 0, scale: 0.88, y: 30 })
     gsap.set(textEls, { opacity: 0, y: 28 })
@@ -336,7 +336,7 @@ function HeroSection({ lang }: { lang: Lang }) {
     .to('.hero-h1',      { opacity: 1, y: 0, duration: 0.4, ease: 'power3.out' }, '-=0.28')
     .to('.hero-sub',     { opacity: 1, y: 0, duration: 0.4, ease: 'power3.out' }, '-=0.28')
     .to('.hero-rule',    { opacity: 1, y: 0, duration: 0.3, ease: 'power3.out' }, '-=0.25')
-    .to('.hero-stats-row', { opacity: 1, y: 0, duration: 0.4, ease: 'power3.out' }, '-=0.22')
+
 
     return () => { tl.kill() }
   }, [])
@@ -423,22 +423,6 @@ function HeroSection({ lang }: { lang: Lang }) {
               {h.cta}
             </a>
             <div className="hero-rule hidden" />
-            <div className="hero-stats-row">
-              <div className="hero-stat-item">
-                <span className="hero-stat-num">100+</span>
-                <span className="hero-stat-lbl">{h.stats[0]}</span>
-              </div>
-              <div className="hero-stat-sep" />
-              <div className="hero-stat-item">
-                <span className="hero-stat-num">10+</span>
-                <span className="hero-stat-lbl">{h.stats[1]}</span>
-              </div>
-              <div className="hero-stat-sep" />
-              <div className="hero-stat-item">
-                <span className="hero-stat-num">100%</span>
-                <span className="hero-stat-lbl">{h.stats[2]}</span>
-              </div>
-            </div>
           </>)})()}
         </div>
       </div>
